@@ -44,20 +44,6 @@ function gen_test(constraint::DataConstraint,mutant::DataConstraint)
                 # println("should be KO :",test_eval(mutant,DataTest(test_variables,y),"test"))
                 return DataTest(test_variables,y)
             elseif (j == exponent*2)
-                if (trunc(0.6+rand()) == 1)
-                    test_variables = []
-                    for i = 1:length(constraint.dataVariables)-1
-                        var = deepcopy(constraint.dataVariables[i+1])
-                        test_variables = append!(test_variables,[var])
-                    end
-                    
-                    for i = 1:length(test_variables)
-                        test_variables[i].dataValue = constraint.dataVariables[i+1].dataValue.lo + (rand(Float64,1)[1] * (constraint.dataVariables[i+1].dataValue.hi - constraint.dataVariables[i+1].dataValue.lo + 1))
-                    end
-                    
-                    y = pick_test(constraint,test_variables)
-                    return DataTest(test_variables,y)     
-                end
                 # println("should be OK")
                 f = open("equivalent_mutants.txt","a")
                 println(f,"FAIL GENERATE TEST FOR: ",csp_test[(i-1)*2+2].dataName," AT ABS_PREC: ",abs_error)
@@ -76,13 +62,6 @@ function test_eval(constraint::DataConstraint,test::DataTest, file_name)
     #     prec = 2
     # end
     # setprecision(Interval,prec)
-
-    # # eval bounds
-    # for i = 1:length(test.dataTestVariables)
-    #     if !((test.dataTestVariables[i].dataValue >= constraint.dataVariables[i+1].dataValue.lo) && (test.dataTestVariables[i].dataValue <= constraint.dataVariables[i+1].dataValue.hi))
-    #         return "KO"
-    #     end
-    # end
 
     # eval valid test
     eval(Meta.parse("y = @interval(-Inf,+Inf)"))
@@ -136,41 +115,6 @@ function test_eval(constraint::DataConstraint,test::DataTest, file_name)
             return "KO"
         end
     end
-
-    # verdict = "OK"
-
-    # if (trunc(0.35+rand()) == 1)
-    #     gen_RPFile_test_evaluation(constraint,test,Float64(constraint.dataRelativeError.dataValue)*10.0^-1,file_name)
-        
-    #     if (trunc(0.15+rand()) == 1)
-    #         verdict = "OK"
-    #         if test.dataTestResult.dataValid != nothing
-    #             verdict, res = verdict_test_file(string(file_name,"_valid"),1)
-    #             if verdict == "KO"
-    #                 return verdict
-    #             end
-    #         end
-    #     end
-        
-    #     if (trunc(0.15+rand()) == 1)
-    #         if test.dataTestResult.dataInvalid[1] != nothing
-    #             verdict, res = verdict_test_file(string(file_name,"_invalid1"),0)
-    #             if verdict == "KO"
-    #         return verdict
-    #             end
-    #         end
-    #     end
-        
-    #     if (trunc(0.15+rand()) == 1)
-    #         if test.dataTestResult.dataInvalid[2] != nothing
-    #             verdict, res = verdict_test_file(string(file_name,"_invalid2"),0)
-    #             if verdict == "KO"
-    #                 return verdict
-    #             end
-    #         end
-    #     end
-        
-    # end
     
     return "UNCERTAIN"
 end
