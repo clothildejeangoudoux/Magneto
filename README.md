@@ -2,7 +2,7 @@
 
 ### Dependencies ###
 - RealPaver 0.4 for Magneto
-- Julia 1.4.1 or above
+- Julia 1.4.2 or above
 
 ### Installation Instructions ###
 RealPaver 0.4 for Magneto, in the ```realpaver-0.4_Magneto``` directory
@@ -18,10 +18,10 @@ Julia 1.4.1 or above
 
 ### Magneto Test Suite ###
 Execute the benchmark in the ```benchmark/fpbench``` directory with the command\\
-``` ./run_test.sh a b c ```
+``` ./run_test.sh a b ```
 - with ```a = 1``` for Magneto execution
-- with ```b = 1``` for Rand 5s execution
-- with ```c = 1``` for Rand 50s execution
-- with ```d  = 0``` to run all the benchmark suite or the number of the benchmark to run a single test (e.g. ```d = 001``` for 001_carthesianToPolar_radius)
+- with ```a = 2``` for Rand 5s execution
+- with ```a = 3``` for Rand 50s execution
+- with ```b  = 0``` to run all the benchmark suite or the number of the benchmark to run a single test (e.g. ```b = 001``` for 001_carthesianToPolar_radius)
 
-After running the test script, the results are available in ```benchmark/fpbench/```
+After running the test script, the results are available in ```benchmark/fpbench/log_files```
